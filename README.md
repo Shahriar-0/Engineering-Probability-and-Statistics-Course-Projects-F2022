@@ -1,2 +1,2 @@
-# EPS_uni
-EPS course projects
+# Engineering Probability and Statistics
+Projects for the engineering probability and statistics course at Tehran university.

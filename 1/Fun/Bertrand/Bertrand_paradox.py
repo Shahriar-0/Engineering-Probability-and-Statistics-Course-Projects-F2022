@@ -17,7 +17,6 @@ import os
 
 choice = 1
 
-
 class Bertrand:
     def __init__(self):
         ## creates a figure and an Axes object(the plotting area)
@@ -82,21 +81,25 @@ class Bertrand:
         points = np.vstack([points, [x, y]])
         self.ax.plot(
             points[:, 0], points[:, 1], linewidth=2, color="blue"
-        )  ##, label='equilateral triangle'
+        )  
+        
+    def draw_circle_triangle(self, centerx, centery):
+        r = float(input("radius = "))
+        n = int(input("sample population = "))
+        
+        self.draw_circle(r, center=(centerx, centery))
+
+        ## get a fixed P point on the circumference
+        alpha = random() * (2 * np.pi)
+        x0, y0 = centerx + r * np.cos(alpha), centery + r * np.sin(alpha)
+        P = (x0, y0)
+        self.draw_triangle(P, center=(centerx, centery))
+        return r, n, P
 
     def first_method(self):
         global choice
-        r = float(input("radius = "))
-        n = int(input("sample population = "))
-
         self.fig.suptitle("Bertrand paradox (random two points)")
-        self.draw_circle(r, center=(0, 0))
-
-        ## get a fixed P point on the circumference
-        alpha = random() * (2 * np.pi)  ##Random float:  0.0 <= x < 1.0
-        x0, y0 = 0 + r * np.cos(alpha), 0 + r * np.sin(alpha)  ## here (0,0) is the center
-        P = (x0, y0)
-        self.draw_triangle(P, center=(0, 0))
+        r, n, P = self.draw_circle_triangle(0, 0)
 
         center_points = []
         fav = 0  ## Sample number that great than sqrt(3)*r
@@ -114,7 +117,6 @@ class Bertrand:
             # self.ax.plot((M1[0]+M2[0])/2, (M1[1]+M2[1])/2, color='orange', marker='.') ## middle point
             center_points.append([(M1[0] + M2[0]) / 2, (M1[1] + M2[1]) / 2])
 
-            plt.draw()
             self.ax.plot(x, y, color="black", marker=".")
             if self.distance(M2, M1) > self.triangle_len:
                 self.ax.plot([M1[0], M2[0]], [M1[1], M2[1]], color="green")
@@ -122,7 +124,6 @@ class Bertrand:
             else:
                 self.ax.plot([M1[0], M2[0]], [M1[1], M2[1]], color="red")
 
-            plt.pause(0.001)
             print("Sample {}".format(i + 1), end="\r")
             self.draw_triangle(P, center=(0, 0))
             plt.savefig(f"./pictures/{choice}/{i}.png")
@@ -135,34 +136,15 @@ class Bertrand:
         plt.grid()
         plt.show()
 
-        #### plot the middle points of the chords distribution with the circle
-        center_points = np.array(center_points)
-        self.fig, self.ax = plt.subplots()
-        self.fig.suptitle("Bertrand paradox (random two points)")
-        self.draw_circle(r, center=(0, 0))
-        self.ax.scatter(
-            center_points[:, 0], center_points[:, 1], color="orange", marker="."
-        )
-        self.draw_triangle(P, center=(0, 0))
-        circle = plt.Circle((0, 0), r / 2, color="grey", fill=False)
-        self.ax.add_artist(circle)
-        plt.grid()
-        plt.show()
+        self.plot_middle_points(0, 0, r, P, center_points)
+        
 
     def second_method(self):
         global choice
         centerx = 0
         centery = 0
-        r = float(input("radius = "))
-        n = int(input("sample population = "))
         self.fig.suptitle("Bertrand paradox (random middle point in circle)")
-        self.draw_circle(r, center=(centerx, centery))
-
-        ## get a fixed P point on the circumference
-        alpha = random() * (2 * np.pi)  ##Random float:  0.0 <= x < 1.0
-        x0, y0 = centerx + r * np.cos(alpha), centery + r * np.sin(alpha)
-        P = (x0, y0)
-        self.draw_triangle(P, center=(centerx, centery))
+        r, n, P = self.draw_circle_triangle(centerx, centery)
 
         ## draw a smaller circle
         circle = plt.Circle((centerx, centery), r / 2, color="grey", fill=False)
@@ -185,7 +167,6 @@ class Bertrand:
             x2, y2 = centerx + x - length * np.cos(beta), centery + y - length * np.sin(beta)
             ## the new point
             M = (x, y)
-            plt.draw()
             if rand_r < r / 2:
                 # plt.plot(x, y, color='green', marker='.')
                 self.ax.plot([x1, x2], [y1, y2], color="green")
@@ -194,7 +175,6 @@ class Bertrand:
                 # plt.plot(x, y, color='red', marker='.')
                 self.ax.plot([x1, x2], [y1, y2], color="red")
 
-            plt.pause(0.001)
             print("Sample {}".format(i + 1), end="\r")
             # plt.plot(x, y, color='gray', marker='.')
             self.draw_triangle(P, center=(0, 0))
@@ -208,34 +188,16 @@ class Bertrand:
         plt.grid()
         plt.show()
 
-        #### plot the middle points of the chords distribution with the circle
-        center_points = np.array(center_points)
-        self.fig, self.ax = plt.subplots()
-        self.fig.suptitle("Bertrand paradox (random middle point in circle)")
-        self.draw_circle(r, center=(0, 0))
-        self.ax.scatter(
-            center_points[:, 0], center_points[:, 1], color="orange", marker="."
-        )
-        self.draw_triangle(P, center=(0, 0))
-        circle = plt.Circle((centerx, centery), r / 2, color="grey", fill=False)
-        self.ax.add_artist(circle)
-        plt.grid()
-        plt.show()
+        self.plot_middle_points(centerx, centery, r, P, center_points)
+
+    
 
     def third_method(self):
         global choice
         centerx = 0
         centery = 0
-        r = float(input("radius = "))
-        n = int(input("sample population = "))
         self.fig.suptitle("Bertrand paradox (random middle point in a radius)")
-        self.draw_circle(r, center=(centerx, centery))
-
-        ## get a fixed P point on the circumference
-        alpha0 = random() * (2 * np.pi)
-        x0, y0 = centerx + r * np.cos(alpha0), centery + r * np.sin(alpha0)
-        P = (x0, y0)
-        self.draw_triangle(P, center=(centerx, centery))
+        r, n, P = self.draw_circle_triangle(centerx, centery)
 
         center_points = []
 
@@ -246,7 +208,6 @@ class Bertrand:
             m = np.random.uniform(low=0, high=r)
             x, y = m * np.cos(alpha), m * np.sin(alpha)
             M = (x, y)
-            plt.draw()
             # self.ax.plot(x, y, color='orange', marker='.') ## middle point
             center_points.append([x, y])
             ## perpendicular line to the radius in the generated point
@@ -261,7 +222,6 @@ class Bertrand:
             else:
                 self.ax.plot([x1, x2], [y1, y2], color="red")
 
-            plt.pause(0.001)
             print("Sample {}".format(i + 1), end="\r")
 
             self.draw_triangle(P, center=(0, 0))
@@ -274,7 +234,9 @@ class Bertrand:
         plt.grid()
         plt.show()
 
-        #### plot the middle points of the chords distribution with the circle
+        self.plot_middle_points(centerx, centery, r, P, center_points)
+
+    def plot_middle_points(self, centerx, centery, r, P, center_points):
         center_points = np.array(center_points)
         self.fig, self.ax = plt.subplots()
         self.fig.suptitle("Bertrand paradox (random middle point in a radius)")
@@ -312,39 +274,12 @@ def main():
     else:
         print("Input choice is invalid")
 
-
-def distribution_plot(data, xname):
-    ax = sns.distplot(
-        data,
-        bins=1000,
-        kde=True,
-        color="skyblue",
-        hist_kws={"linewidth": 15, "alpha": 1},
-    )
-    ax.set(xlabel=xname, ylabel="Frequency")
-    plt.show()
-
-
 if __name__ == "__main__":
     """
     ### https://www.datacamp.com/tutorial/probability-distributions-python
     ### https://stackoverflow.com/questions/753190/programmatically-generate-video-or-animated-gif-in-python
     ### https://github.com/Fengtao22/Bertrand-paradox-Python_simulation/blob/main/bertrands.py
     ### This is a modified version of Fengtao22's code
-    
-    random_test = []
-    for i in range(10000):
-            random_test.append(random())
-    distribution_plot(random_test, 'random() Distribution')
-
-    random_test = []
-    for i in range(10000):
-            random_test.append(np.random.uniform(0,1))
-    distribution_plot(random_test, 'uniform() Distribution')
-
-    from scipy.stats import uniform
-    data_uniform = uniform.rvs(size=10000, loc = 0, scale=1)
-    distribution_plot(data_uniform, 'scipy.stats.uniform Distribution')
     """
 
     main()

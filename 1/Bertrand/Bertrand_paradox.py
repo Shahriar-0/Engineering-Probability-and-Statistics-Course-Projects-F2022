@@ -330,6 +330,8 @@ if __name__ == "__main__":
     ### https://www.datacamp.com/tutorial/probability-distributions-python
     ### https://stackoverflow.com/questions/753190/programmatically-generate-video-or-animated-gif-in-python
     ### https://github.com/Fengtao22/Bertrand-paradox-Python_simulation/blob/main/bertrands.py
+    ### This is a modified version of Fengtao22's code
+    
     random_test = []
     for i in range(10000):
             random_test.append(random())

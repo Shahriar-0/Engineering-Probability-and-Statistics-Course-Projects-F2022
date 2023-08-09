@@ -23,4 +23,3 @@ y2 = comb(n, k) * ((M / N) ** k) * (((N - M) / N) ** (n - k))
 ax[1].plot(k, y2)
 
 plt.show()
-hypergeometric 

@@ -4,7 +4,7 @@
   - [Intro](#intro)
   - [Project 1 - Probability Limit Definition](#project-1---probability-limit-definition)
   - [Project 2 - Conditional Probability](#project-2---conditional-probability)
-  - [Project 3](#project-3)
+  - [Project 3 - Distributions](#project-3---distributions)
   - [Project 4](#project-4)
   - [Project 5](#project-5)
   - [Project 6](#project-6)
@@ -23,7 +23,9 @@ In this project, want to see how the probability limit definition works. For thi
 
 In this project, we will see how conditional probability works. We simulated the famous monte hall problem and compare the calculated probability with the theoretical one. We also examined how a Bayesian Model works.
 
-## Project 3
+## Project 3 - Distributions
+
+In this project, we checked different distributions in R and see how they work. We looked at binomial, hypergeometric, and Poisson distributions and more and tried to implement them in R.
 
 ## Project 4
 

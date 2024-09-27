@@ -7,7 +7,7 @@
   - [Project 3 - Distributions](#project-3---distributions)
   - [Project 4 - Central Limit Theorem](#project-4---central-limit-theorem)
   - [Project 5 - Beta Distribution](#project-5---beta-distribution)
-  - [Project 6](#project-6)
+  - [Project 6 - Sampling](#project-6---sampling)
 
 This repository contains the projects for the engineering probability and statistics course at Tehran university.
 
@@ -35,4 +35,6 @@ In this project, we tried to see how the central limit theorem works. We also tr
 
 In this project, we tried to see how beta distribution works and we worked with covariance and correlation and tried to implement them in R.
 
-## Project 6
+## Project 6 - Sampling
+
+In last project, we tried to see how sampling works and we tried to implement it in R.
